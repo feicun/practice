@@ -4,7 +4,7 @@ def gen_fib():
     if count <= 0:
         return [0]
     if count == 1:
-        return [1];
+        return [1]
 
     a = 0
     b = 1
