@@ -7,6 +7,7 @@ def reverse(word):
 word = raw_input('Give a text: ')
 y = reverse(word)
 if y == word:
-    print('It is a Palindrome')
+    print 'It is a Palindrome'
 else:
-    print('It is NOT a Palindrome')
+    print 'It is NOT a Palindrome'
+
