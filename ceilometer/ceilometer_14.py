@@ -22,9 +22,16 @@ meterlist = ceilometer.meters.list()
 #     print '\n'
 #     print type(one)
 
-network_outpacket_rate_sample = ceilometer.samples.list(
-    'network.outgoing.packets.rate')
-for each in network_outpacket_rate_sample:
+# network_outpacket_rate_sample = ceilometer.samples.list(
+#     'network.outgoing.packets.rate')
+# for each in network_outpacket_rate_sample:
+#     print '\n'
+#     # print each.resource_id, each.timestamp
+#     print type(each)
+
+cpu_util_sample = ceilometer.samples.list(
+    'cpu_util')
+for each in cpu_util_sample:
     print '\n'
     # print each.resource_id, each.timestamp
     print type(each)
