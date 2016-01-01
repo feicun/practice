@@ -15,7 +15,7 @@ auth_token = keystone.auth_token
 ceilometer = c_client.Client(
     endpoint=CEILOMETER_ENDPOINT, token=lambda: auth_token)
 
-meterlist = ceilometer.meters.list()
+# meterlist = ceilometer.meters.list()
 # print meterlist
 # print type(meterlist)
 # for one in meterlist:
@@ -29,9 +29,23 @@ meterlist = ceilometer.meters.list()
 #     # print each.resource_id, each.timestamp
 #     print type(each)
 
-cpu_util_sample = ceilometer.samples.list(
-    'cpu_util')
+# cpu_util_sample = ceilometer.samples.list(
+#     'cpu_util')
+# for each in cpu_util_sample:
+#     print '\n'
+#     print each.resource_id, each.timestamp
+#     prin
+
+# Create a query:
+q = [
+    # {"field": "timestamp", "op": "ge", "value": "2014-04-01T13:34:17"},
+    {"field": "resource_id", "op": "eq", "value": "2f83f863-c4c6-445e-a0f4-7871c9ff641d"},
+    {"field": "meter", "op": "eq", "value": "cpu_util"}
+    ]
+
+# Pass above query in:
+cpu_util_sample = ceilometer.new_samples.list(q)
 for each in cpu_util_sample:
     print '\n'
-    # print each.resource_id, each.timestamp
-    print type(each)
+    print str(type(each)) + "value is: "
+    print each
