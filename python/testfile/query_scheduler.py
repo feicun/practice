@@ -3,9 +3,27 @@
 
 import requests
 import json
+import ceilometerclient.v2 as c_client
+import keystoneclient.v2_0.client as k_client
 
-from datetime import time
 from apscheduler.schedulers.blocking import BlockingScheduler
+
+
+def create_ceilomenter_client():
+    OS_USERNAME = "admin"
+    OS_PASSWORD = "su123"
+    OS_TENANT_NAME = "admin"
+    OS_AUTH_URL = "http://10.10.1.14:5000/v2.0/"
+    CEILOMETER_ENDPOINT = "http://10.10.1.14:8777"
+
+    keystone = k_client.Client(auth_url=OS_AUTH_URL, username=OS_USERNAME,
+                               password=OS_PASSWORD, tenant_name=OS_TENANT_NAME)
+
+    auth_token = keystone.auth_token
+
+    ceilometer = c_client.Client(
+        endpoint=CEILOMETER_ENDPOINT, token=lambda: auth_token)
+    return ceilometer
 
 
 def fetch_statistics():
@@ -31,12 +49,15 @@ def my_job(text):
 
 
 def main():
+    ceilometer = create_ceilomenter_client()
+    resources = ceilometer.resources.list()
+    for i in resources:
+        print '\n'
+        print i
     # Run this job in certian time, with parameter 'text'
     sched = BlockingScheduler()
     sched.add_job(my_job, 'interval', seconds=5, args=['test'])
     sched.start()
-    # while True:
-        # time.sleep(10)
 
 
 if __name__ == "__main__":
