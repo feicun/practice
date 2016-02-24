@@ -52,8 +52,8 @@ def main():
     ceilometer = create_ceilomenter_client()
     resources = ceilometer.resources.list()
     for i in resources:
-        print '\n'
-        print i
+        # print '\n'
+        print i.resource_id
     # Run this job in certian time, with parameter 'text'
     sched = BlockingScheduler()
     sched.add_job(my_job, 'interval', seconds=5, args=['test'])
